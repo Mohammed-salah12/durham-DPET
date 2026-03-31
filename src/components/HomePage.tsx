@@ -1,4 +1,4 @@
-import { ArrowRight, GraduationCap, Users, Award, BookOpen, Heart, Globe } from 'lucide-react';
+import { ArrowRight, GraduationCap, Award, BookOpen, Heart, Globe } from 'lucide-react';
 import { Button } from './ui/button';
 import { Card } from './ui/card';
 import { ImageWithFallback } from './figma/ImageWithFallback';
@@ -38,42 +38,41 @@ export function HomePage({ onNavigate }: HomePageProps) {
   ];
 
   return (
-    <div>
-      {/* Hero Section */}
-      <section className="relative h-[600px] overflow-hidden">
+    <div className="relative">
+      <section className="dpet-hero min-h-[680px] border-b border-white/10">
         <div className="absolute inset-0">
           <img
             src={heroImage}
             alt="Traditional Palestinian Tatreez embroidery with olive branch"
-            className="w-full h-full object-cover"
+            className="h-full w-full object-cover opacity-30 mix-blend-luminosity"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[var(--dpet-black)]/80 via-[var(--dpet-red)]/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-dpet-black/90 via-dpet-red/45 to-transparent" />
         </div>
 
-        <div className="relative container mx-auto px-4 h-full flex items-center">
-          <div className="max-w-2xl text-white">
-            <div className="inline-block px-4 py-2 bg-[var(--dpet-red)]/90 rounded-full mb-6">
-              <span className="text-sm">Building Futures Since 2010</span>
+        <div className="dpet-hero-content container mx-auto flex min-h-[680px] items-center px-4 py-24">
+          <div className="max-w-3xl text-white">
+            <div className="dpet-kicker mb-6">
+              Building Futures Since 2010
             </div>
-            <h1 className="text-5xl md:text-6xl mb-6 text-white">
+            <h1 className="mb-6 max-w-3xl text-5xl font-semibold leading-[0.94] text-white md:text-7xl">
               Empowering Palestinian Students.
               <br />
-              <span className="text-[var(--dpet-beige)]">Building a Future Through Education.</span>
+              <span className="text-dpet-beige">Building a Future Through Education.</span>
             </h1>
-            <p className="text-xl mb-8 text-gray-200">
-              Supporting exceptional Palestinian students to pursue world-class education at Durham University.
+            <p className="mb-10 max-w-2xl text-lg font-medium leading-relaxed text-white/82 md:text-xl">
+              Supporting exceptional Palestinian students to pursue world-class
+              education at Durham University.
             </p>
             <div className="flex flex-wrap gap-4">
               <Button
                 onClick={() => onNavigate('apply')}
-                className="bg-[var(--dpet-red)] hover:bg-[var(--dpet-red-dark)] text-white px-8 py-6"
+                className="dpet-button-primary h-13 rounded-full px-8 py-6 font-semibold"
               >
                 Apply Now <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
               <Button
                 onClick={() => onNavigate('contact')}
-                variant="outline"
-                className="border-white text-[var(--dpet-red)] hover:bg-white hover:text-[var(--dpet-black)] px-8 py-6"
+                className="dpet-button-outline-light h-13 rounded-full px-8 py-6 font-semibold"
               >
                 Support the Trust <Heart className="w-5 h-5 ml-2" />
               </Button>
@@ -82,69 +81,77 @@ export function HomePage({ onNavigate }: HomePageProps) {
         </div>
       </section>
 
-      {/* Impact Stats */}
-      <section className="py-16 bg-white border-b border-[var(--dpet-beige)]">
+      <section className="relative z-10 -mt-16 pb-8">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-[var(--dpet-beige)] rounded-full mb-4">
-                  <stat.icon className="w-8 h-8 text-[var(--dpet-red)]" />
+          <div className="dpet-card mx-auto max-w-6xl px-6 py-8 md:px-10">
+            <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+              {stats.map((stat, index) => (
+                <div key={index} className="text-center group transition-all duration-300 hover:-translate-y-1">
+                  <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-dpet-beige-light text-dpet-red transition-colors duration-500 group-hover:bg-dpet-red group-hover:text-white">
+                    <stat.icon className="h-8 w-8 transition-transform duration-500 group-hover:scale-110" />
+                  </div>
+                  <div className="mb-2 text-4xl font-extrabold text-dpet-red tabular-nums">
+                    {stat.value}
+                  </div>
+                  <div className="text-sm font-semibold uppercase tracking-[0.18em] text-dpet-clay">
+                    {stat.label}
+                  </div>
                 </div>
-                <div className="text-4xl mb-2 text-[var(--dpet-red)]">{stat.value}</div>
-                <div className="text-[var(--dpet-olive)]">{stat.label}</div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Mission Section */}
-      <section className="py-20 bg-[var(--dpet-beige-light)]">
+      <section className="dpet-soft-section py-20">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl mb-4 text-[var(--dpet-black)]">Our Mission</h2>
-              <div className="w-24 h-1 bg-[var(--dpet-red)] mx-auto rounded-full" />
-            </div>
-            <div className="bg-white rounded-lg shadow-lg p-8 md:p-12">
-              <p className="text-lg mb-6 text-[var(--dpet-black)] leading-relaxed">
-                The Durham Palestine Educational Trust (DPET) is dedicated to providing scholarships and support to outstanding Palestinian students seeking to pursue their higher education at Durham University. Founded on the principles of educational equity and cultural exchange, we believe that education is the cornerstone of peace, prosperity, and understanding.
+            <h2 className="dpet-section-title mb-12">Our Mission</h2>
+            <div className="dpet-card p-8 md:p-12">
+              <p className="mb-6 text-lg leading-relaxed text-dpet-black">
+                The Durham Palestine Educational Trust (DPET) is dedicated to
+                providing scholarships and support to outstanding Palestinian
+                students seeking to pursue their higher education at Durham
+                University. Founded on the principles of educational equity and
+                cultural exchange, we believe that education is the cornerstone
+                of peace, prosperity, and understanding.
               </p>
-              <p className="text-lg text-[var(--dpet-black)] leading-relaxed">
-                Through our scholarship program, we aim to create lasting bridges between Palestinian heritage and British academic excellence, empowering the next generation of leaders, thinkers, and change-makers who will shape a brighter future for their communities and the world.
+              <p className="text-lg leading-relaxed text-dpet-black">
+                Through our scholarship program, we aim to create lasting
+                bridges between Palestinian heritage and British academic
+                excellence, empowering the next generation of leaders,
+                thinkers, and change-makers who will shape a brighter future
+                for their communities and the world.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Meet Our Scholars */}
-      <section className="py-20 bg-white">
+      <section className="py-20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-4xl mb-4 text-[var(--dpet-black)]">Meet Our Scholars</h2>
-            <div className="w-24 h-1 bg-[var(--dpet-olive)] mx-auto rounded-full" />
-            <p className="text-lg mt-6 text-[var(--dpet-olive)]">
+            <h2 className="dpet-section-title">Meet Our Scholars</h2>
+            <p className="mx-auto mt-6 max-w-2xl text-lg text-dpet-clay">
               Stories of resilience, excellence, and hope
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {scholars.map((scholar, index) => (
-              <Card key={index} className="overflow-hidden hover:shadow-xl transition-shadow duration-300">
+              <Card key={index} className="dpet-card group overflow-hidden">
                 <div className="relative h-64 overflow-hidden">
                   <ImageWithFallback
                     src={scholar.image}
                     alt={scholar.name}
-                    className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500"
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-dpet-black/60 to-transparent" />
                 </div>
                 <div className="p-6">
-                  <h3 className="text-xl mb-2 text-[var(--dpet-black)]">{scholar.name}</h3>
-                  <div className="text-sm text-[var(--dpet-olive)] mb-4">{scholar.program}</div>
-                  <p className="text-gray-600 italic">"{scholar.quote}"</p>
+                  <h3 className="mb-2 text-2xl font-semibold text-dpet-black transition-colors duration-300 group-hover:text-dpet-red">{scholar.name}</h3>
+                  <div className="mb-4 text-sm font-semibold uppercase tracking-[0.18em] text-dpet-olive">{scholar.program}</div>
+                  <p className="leading-relaxed text-dpet-clay italic">"{scholar.quote}"</p>
                 </div>
               </Card>
             ))}
@@ -153,8 +160,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
           <div className="text-center mt-12">
             <Button
               onClick={() => onNavigate('stories')}
-              variant="outline"
-              className="border-[var(--dpet-olive)] text-[var(--dpet-olive)] hover:bg-[var(--dpet-olive)] hover:text-white"
+              className="dpet-button-outline-brand h-13 rounded-full px-8 py-6 font-semibold"
             >
               Read More Stories <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
@@ -162,24 +168,28 @@ export function HomePage({ onNavigate }: HomePageProps) {
         </div>
       </section>
 
-      {/* Call to Action */}
-      <section className="py-20 bg-[var(--dpet-olive)] text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl mb-6 text-white">Ready to Begin Your Journey?</h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto">
-            Join our community of scholars and make your mark at Durham University
+      <section className="dpet-dark-section py-20">
+        <div className="container relative z-10 mx-auto px-4 text-center">
+          <div className="dpet-kicker mb-6">
+            Scholarships, community, and opportunity
+          </div>
+          <h2 className="mx-auto mb-6 max-w-3xl text-4xl font-semibold text-white md:text-5xl">
+            Ready to Begin Your Journey?
+          </h2>
+          <p className="mx-auto mb-8 max-w-2xl text-xl text-dpet-white/85">
+            Join our community of scholars and make your mark at Durham
+            University.
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             <Button
               onClick={() => onNavigate('apply')}
-              className="bg-white text-[var(--dpet-olive)] hover:bg-[var(--dpet-beige)] px-8 py-6"
+              className="dpet-button-light h-13 rounded-full px-8 py-6 font-semibold"
             >
               Apply for Scholarship <ArrowRight className="w-5 h-5 ml-2" />
             </Button>
             <Button
               onClick={() => onNavigate('about')}
-              variant="outline"
-              className="border-white text-white hover:bg-white hover:text-[var(--dpet-olive)] px-8 py-6"
+              className="dpet-button-outline-light h-13 rounded-full px-8 py-6 font-semibold"
             >
               Learn More About Us
             </Button>

@@ -1,5 +1,6 @@
 import { Quote, GraduationCap, Briefcase, Heart } from 'lucide-react';
 import { Card } from './ui/card';
+import { Button } from './ui/button';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 
 export function StoriesPage() {
@@ -40,34 +41,34 @@ export function StoriesPage() {
 
   return (
     <div>
-      {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-br from-[var(--dpet-olive)] to-[var(--dpet-olive-light)] text-white">
-        <div className="container mx-auto px-4">
+      <section className="dpet-hero py-24">
+        <div className="container dpet-hero-content mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-5xl mb-6 text-white">Scholar Stories</h1>
-            <p className="text-xl">
-              Inspiring journeys of resilience, excellence, and hope from our DPET scholars
+            <div className="dpet-kicker mb-6">Scholar Voices</div>
+            <h1 className="mb-6 text-5xl font-semibold text-white md:text-6xl">Scholar Stories</h1>
+            <p className="mx-auto max-w-3xl text-xl font-medium leading-relaxed text-white/85">
+              Inspiring journeys of resilience, excellence, and hope from our
+              DPET scholars.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Introduction */}
-      <section className="py-16 bg-white">
+      <section className="py-16">
         <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center">
-            <Quote className="w-12 h-12 text-[var(--dpet-red)] mx-auto mb-6" />
-            <p className="text-xl text-gray-700">
-              Every scholarship tells a story. Each DPET scholar brings unique experiences, dreams, and determination. 
-              These are the voices of students who overcame challenges, pursued excellence, and are now making 
-              positive change in their communities and beyond.
+          <div className="dpet-card mx-auto max-w-3xl p-8 text-center md:p-10">
+            <Quote className="mx-auto mb-6 h-12 w-12 text-dpet-red" />
+            <p className="text-xl leading-relaxed text-dpet-clay">
+              Every scholarship tells a story. Each DPET scholar brings unique
+              experiences, dreams, and determination. These are the voices of
+              students who overcame challenges, pursued excellence, and are now
+              making positive change in their communities and beyond.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Scholar Stories */}
-      <section className="py-20 bg-[var(--dpet-beige-light)]">
+      <section className="dpet-soft-section py-20">
         <div className="container mx-auto px-4">
           <div className="space-y-16">
             {stories.map((scholar, index) => (
@@ -75,41 +76,43 @@ export function StoriesPage() {
                 key={index}
                 className={`flex flex-col ${
                   index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'
-                } gap-8 items-center max-w-6xl mx-auto`}
+                } gap-8 items-center max-w-6xl mx-auto group`}
               >
                 {/* Image */}
                 <div className="w-full lg:w-1/3">
                   <div className="relative">
-                    <ImageWithFallback
-                      src={scholar.image}
-                      alt={scholar.name}
-                      className="w-full h-[400px] object-cover rounded-lg shadow-xl"
-                    />
-                    <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-[var(--dpet-red)] rounded-lg opacity-20 -z-10" />
+                    <div className="dpet-card overflow-hidden p-3">
+                      <ImageWithFallback
+                        src={scholar.image}
+                        alt={scholar.name}
+                        className="h-[400px] w-full rounded-[1.25rem] object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                    </div>
+                    <div className="absolute -bottom-5 -right-5 h-32 w-32 rounded-[1.75rem] border border-dpet-gold/35 bg-dpet-red/10 -z-10" />
                   </div>
                 </div>
 
                 {/* Content */}
                 <div className="w-full lg:w-2/3">
-                  <Card className="p-8 hover:shadow-xl transition-shadow">
+                  <Card className="dpet-card p-8 transition-all duration-500 group-hover:shadow-dpet-hover">
                     <div className="flex items-start gap-4 mb-6">
-                      <div className="w-12 h-12 bg-[var(--dpet-red)]/10 rounded-full flex items-center justify-center flex-shrink-0">
-                        <GraduationCap className="w-6 h-6 text-[var(--dpet-red)]" />
+                      <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-dpet-red/10">
+                        <GraduationCap className="h-6 w-6 text-dpet-red" />
                       </div>
                       <div>
-                        <h2 className="text-3xl mb-2 text-[var(--dpet-black)]">{scholar.name}</h2>
-                        <p className="text-[var(--dpet-olive)] mb-1">{scholar.degree}</p>
-                        <p className="text-gray-500 text-sm">{scholar.year}</p>
+                        <h2 className="mb-2 text-3xl font-semibold text-dpet-black transition-colors group-hover:text-dpet-red">{scholar.name}</h2>
+                        <p className="mb-1 text-sm font-semibold uppercase tracking-[0.18em] text-dpet-olive">{scholar.degree}</p>
+                        <p className="text-sm text-dpet-clay/80">{scholar.year}</p>
                       </div>
                     </div>
 
-                    <div className="relative pl-6 border-l-4 border-[var(--dpet-beige)] mb-6">
-                      <Quote className="absolute -left-3 top-0 w-6 h-6 text-[var(--dpet-olive)] bg-white" />
-                      <p className="text-gray-700 italic leading-relaxed">{scholar.story}</p>
+                    <div className="relative mb-6 border-l-4 border-dpet-beige pl-6">
+                      <Quote className="absolute -left-3 top-0 h-6 w-6 bg-white text-dpet-olive" />
+                      <p className="leading-relaxed text-dpet-clay italic">"{scholar.story}"</p>
                     </div>
 
-                    <div className="flex items-center gap-2 text-[var(--dpet-olive)]">
-                      <Briefcase className="w-5 h-5" />
+                    <div className="flex items-center gap-2 font-semibold text-dpet-olive">
+                      <Briefcase className="h-5 w-5" />
                       <span>{scholar.currentRole}</span>
                     </div>
                   </Card>
@@ -120,71 +123,62 @@ export function StoriesPage() {
         </div>
       </section>
 
-      {/* Impact Section */}
-      <section className="py-20 bg-white">
+      <section className="py-20">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
-              <h2 className="text-4xl mb-4 text-[var(--dpet-black)]">The Ripple Effect</h2>
-              <div className="w-24 h-1 bg-[var(--dpet-red)] mx-auto rounded-full" />
+              <h2 className="dpet-section-title">The Ripple Effect</h2>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <Card className="p-6 text-center">
-                <div className="w-16 h-16 bg-[var(--dpet-red)]/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <GraduationCap className="w-8 h-8 text-[var(--dpet-red)]" />
+              <Card className="dpet-card p-6 text-center">
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-dpet-red/10">
+                  <GraduationCap className="h-8 w-8 text-dpet-red" />
                 </div>
-                <h3 className="text-2xl mb-2 text-[var(--dpet-red)]">50+</h3>
-                <p className="text-gray-600">Scholars Educated</p>
+                <h3 className="mb-2 text-2xl font-bold text-dpet-red">50+</h3>
+                <p className="font-medium text-dpet-clay">Scholars Educated</p>
               </Card>
 
-              <Card className="p-6 text-center">
-                <div className="w-16 h-16 bg-[var(--dpet-olive)]/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Briefcase className="w-8 h-8 text-[var(--dpet-olive)]" />
+              <Card className="dpet-card p-6 text-center">
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-dpet-olive/10">
+                  <Briefcase className="h-8 w-8 text-dpet-olive" />
                 </div>
-                <h3 className="text-2xl mb-2 text-[var(--dpet-olive)]">100%</h3>
-                <p className="text-gray-600">Employment Rate</p>
+                <h3 className="mb-2 text-2xl font-bold text-dpet-olive">100%</h3>
+                <p className="font-medium text-dpet-clay">Employment Rate</p>
               </Card>
 
-              <Card className="p-6 text-center">
-                <div className="w-16 h-16 bg-[var(--dpet-red)]/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Heart className="w-8 h-8 text-[var(--dpet-red)]" />
+              <Card className="dpet-card p-6 text-center">
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-dpet-red/10">
+                  <Heart className="h-8 w-8 text-dpet-red" />
                 </div>
-                <h3 className="text-2xl mb-2 text-[var(--dpet-red)]">1000+</h3>
-                <p className="text-gray-600">Lives Impacted</p>
+                <h3 className="mb-2 text-2xl font-bold text-dpet-red">15+</h3>
+                <p className="font-medium text-dpet-clay">Years of Impact</p>
               </Card>
-            </div>
-
-            <div className="mt-12 bg-gradient-to-br from-[var(--dpet-beige)] to-[var(--dpet-beige-light)] rounded-lg p-8 text-center">
-              <p className="text-lg text-gray-700">
-                Each DPET scholar goes on to impact hundreds of lives in their communities—through teaching, 
-                healthcare, business, advocacy, and leadership. The investment in one student creates a 
-                ripple effect of positive change that extends far beyond the individual.
-              </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Call to Action */}
-      <section className="py-20 bg-[var(--dpet-red)] text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl mb-6 text-white">Your Story Could Be Next</h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto">
+      <section className="dpet-dark-section py-20">
+        <div className="container relative z-10 mx-auto px-4 text-center">
+          <div className="dpet-kicker mb-6">The Next Chapter</div>
+          <h2 className="mb-6 text-4xl font-semibold text-white md:text-5xl">Your Story Could Be Next</h2>
+          <p className="mx-auto mb-8 max-w-2xl text-xl text-white/85">
             Join our community of scholars and write your own success story
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button
+            <Button
               onClick={() => window.open('https://durhampalestine.webspace.durham.ac.uk/apply/', '_blank')}
-              className="bg-white text-[var(--dpet-red)] hover:bg-[var(--dpet-beige)] px-8 py-4 rounded-md transition-colors"
+              className="dpet-button-light h-13 rounded-full px-8 py-6 font-semibold"
             >
               Apply for Scholarship
-            </button>
-            <button
-              className="border-2 border-white text-white hover:bg-white hover:text-[var(--dpet-red)] px-8 py-4 rounded-md transition-colors"
+            </Button>
+            <Button
+              onClick={() => window.open('mailto:info@durhampalestine.org', '_blank')}
+              className="dpet-button-outline-light h-13 rounded-full px-8 py-6 font-semibold"
             >
               Support Future Scholars
-            </button>
+            </Button>
           </div>
         </div>
       </section>

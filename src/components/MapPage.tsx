@@ -1,16 +1,15 @@
-import { useEffect, useRef, useState } from 'react';
-import { MapPin, Plane, GraduationCap, Heart } from 'lucide-react';
-import { Card } from './ui/card';
+import { useEffect, useRef } from "react";
+import { Plane, GraduationCap, Heart } from "lucide-react";
+import { Card } from "./ui/card";
 
 export function MapPage() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [animationProgress, setAnimationProgress] = useState(0);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     // Set canvas size
@@ -22,7 +21,7 @@ export function MapPage() {
       }
     };
     updateCanvasSize();
-    window.addEventListener('resize', updateCanvasSize);
+    window.addEventListener("resize", updateCanvasSize);
 
     // Animation
     let frame = 0;
@@ -38,7 +37,7 @@ export function MapPage() {
       const durhamY = canvas.height * 0.4;
 
       // Draw path
-      ctx.strokeStyle = '#E8DCC4';
+      ctx.strokeStyle = "#E8DCC4"; // dpet-beige
       ctx.lineWidth = 2;
       ctx.setLineDash([5, 5]);
       ctx.beginPath();
@@ -47,23 +46,28 @@ export function MapPage() {
         canvas.width * 0.5,
         canvas.height * 0.2,
         durhamX,
-        durhamY
+        durhamY,
       );
       ctx.stroke();
 
       // Draw animated path
       const progress = (Math.sin(frame * 0.02) + 1) / 2;
-      setAnimationProgress(progress);
 
-      ctx.strokeStyle = '#8B1E3F';
+      ctx.strokeStyle = "#8B1E3F"; // dpet-red
       ctx.lineWidth = 3;
       ctx.setLineDash([]);
       ctx.beginPath();
       ctx.moveTo(palestineX, palestineY);
 
       const t = progress;
-      const x = Math.pow(1 - t, 2) * palestineX + 2 * (1 - t) * t * (canvas.width * 0.5) + Math.pow(t, 2) * durhamX;
-      const y = Math.pow(1 - t, 2) * palestineY + 2 * (1 - t) * t * (canvas.height * 0.2) + Math.pow(t, 2) * durhamY;
+      const x =
+        Math.pow(1 - t, 2) * palestineX +
+        2 * (1 - t) * t * (canvas.width * 0.5) +
+        Math.pow(t, 2) * durhamX;
+      const y =
+        Math.pow(1 - t, 2) * palestineY +
+        2 * (1 - t) * t * (canvas.height * 0.2) +
+        Math.pow(t, 2) * durhamY;
 
       ctx.lineTo(x, y);
       ctx.stroke();
@@ -71,10 +75,14 @@ export function MapPage() {
       // Draw plane
       ctx.save();
       ctx.translate(x, y);
-      ctx.fillStyle = '#556B2F';
+      ctx.fillStyle = "#556B2F"; // dpet-olive
       ctx.beginPath();
-      ctx.arc(0, 0, 8, 0, Math.PI * 2);
+      ctx.arc(0, 0, 10, 0, Math.PI * 2);
       ctx.fill();
+      // Add a glow effect
+      ctx.shadowBlur = 15;
+      ctx.shadowColor = "#556B2F";
+      ctx.stroke();
       ctx.restore();
 
       frame++;
@@ -84,143 +92,109 @@ export function MapPage() {
     animate();
 
     return () => {
-      window.removeEventListener('resize', updateCanvasSize);
+      window.removeEventListener("resize", updateCanvasSize);
     };
   }, []);
 
   const milestones = [
     {
-      location: 'Palestine',
-      title: 'Dreams Begin',
-      description: 'Talented students with aspirations for world-class education',
+      location: "Palestine",
+      title: "Dreams Begin",
+      description:
+        "Talented students with aspirations for world-class education",
       icon: Heart,
-      color: 'var(--dpet-red)',
+      color: "var(--dpet-red)",
     },
     {
-      location: 'Application',
-      title: 'Taking the First Step',
-      description: 'Applying for DPET scholarship and Durham University admission',
+      location: "Application",
+      title: "Taking the First Step",
+      description:
+        "Applying for DPET scholarship and Durham University admission",
       icon: GraduationCap,
-      color: 'var(--dpet-olive)',
+      color: "var(--dpet-olive)",
     },
     {
-      location: 'Journey',
-      title: 'The Bridge',
-      description: 'Traveling from Palestine to Durham, supported by DPET',
+      location: "Journey",
+      title: "The Bridge",
+      description: "Traveling from Palestine to Durham, supported by DPET",
       icon: Plane,
-      color: 'var(--dpet-red)',
+      color: "var(--dpet-red)",
     },
     {
-      location: 'Durham',
-      title: 'Excellence Achieved',
-      description: 'Studying at one of the world\'s top universities',
+      location: "Durham",
+      title: "Excellence Achieved",
+      description: "Studying at one of the world's top universities",
       icon: GraduationCap,
-      color: 'var(--dpet-olive)',
+      color: "var(--dpet-olive)",
     },
   ];
 
   return (
     <div>
-      {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-br from-[var(--dpet-red)] to-[var(--dpet-red-dark)] text-white">
-        <div className="container mx-auto px-4">
+      <section className="dpet-hero py-24">
+        <div className="container dpet-hero-content mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-5xl mb-6 text-white">The Journey</h1>
-            <p className="text-xl">
-              A bridge of learning connecting Palestine and Durham University
+            <div className="dpet-kicker mb-6">A Bridge of Learning</div>
+            <h1 className="mb-6 text-5xl font-semibold text-white md:text-6xl">The Journey</h1>
+            <p className="mx-auto max-w-3xl text-xl font-medium leading-relaxed text-white/85">
+              A bridge of learning connecting Palestine and Durham University.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Interactive Map */}
-      <section className="py-20 bg-white">
+      <section className="py-20">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
-            <Card className="p-8">
+            <Card className="dpet-card p-8">
               <div className="mb-8 text-center">
-                <h2 className="text-3xl mb-4 text-[var(--dpet-black)]">From Palestine to Durham</h2>
-                <p className="text-gray-600">
+                <h2 className="mb-4 text-4xl font-semibold text-dpet-black">
+                  From Palestine to Durham
+                </h2>
+                <p className="text-dpet-clay">
                   Watch the journey of hope, opportunity, and transformation
                 </p>
               </div>
 
-              {/* Canvas Map */}
-              <div className="relative w-full h-[400px] bg-[var(--dpet-beige-light)] rounded-lg overflow-hidden">
+              <div className="relative h-[400px] w-full overflow-hidden rounded-[1.5rem] border border-dpet-beige/30 bg-dpet-beige-light/50 shadow-inner">
                 <canvas ref={canvasRef} className="absolute inset-0" />
 
-                {/* Palestine Marker */}
-                <div className="absolute left-[20%] top-[50%] -translate-x-1/2 -translate-y-1/2">
-                  <div className="relative">
-                    <div className="w-16 h-16 bg-[var(--dpet-red)] rounded-full flex items-center justify-center shadow-lg animate-pulse">
-                      <MapPin className="w-8 h-8 text-white" fill="white" />
-                    </div>
-                    <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 whitespace-nowrap">
-                      <div className="bg-white px-4 py-2 rounded-lg shadow-md">
-                        <p className="text-[var(--dpet-red)]">Palestine</p>
-                      </div>
-                    </div>
+                <div className="absolute left-[20%] top-[50%] -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+                  <div className="h-4 w-4 rounded-full bg-dpet-red shadow-lg"></div>
+                  <div className="absolute left-1/2 top-6 -translate-x-1/2 rounded-full border border-dpet-red/20 bg-white px-3 py-1 text-[10px] font-bold tracking-[0.18em] text-dpet-red shadow-sm">
+                    PALESTINE
                   </div>
                 </div>
-
-                {/* Durham Marker */}
-                <div className="absolute left-[80%] top-[40%] -translate-x-1/2 -translate-y-1/2">
-                  <div className="relative">
-                    <div className="w-16 h-16 bg-[var(--dpet-olive)] rounded-full flex items-center justify-center shadow-lg animate-pulse">
-                      <MapPin className="w-8 h-8 text-white" fill="white" />
-                    </div>
-                    <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 whitespace-nowrap">
-                      <div className="bg-white px-4 py-2 rounded-lg shadow-md">
-                        <p className="text-[var(--dpet-olive)]">Durham, UK</p>
-                      </div>
-                    </div>
+                <div className="absolute left-[80%] top-[40%] -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+                  <div className="h-4 w-4 rounded-full bg-dpet-olive shadow-lg"></div>
+                  <div className="absolute left-1/2 top-6 -translate-x-1/2 rounded-full border border-dpet-olive/20 bg-white px-3 py-1 text-[10px] font-bold tracking-[0.18em] text-dpet-olive shadow-sm">
+                    DURHAM
                   </div>
                 </div>
-
-                {/* Distance Info */}
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2">
-                  <div className="bg-white/90 backdrop-blur-sm px-6 py-3 rounded-full shadow-lg">
-                    <p className="text-sm text-gray-700">
-                      <Plane className="w-4 h-4 inline mr-2" />
-                      ~3,600 km journey · 5-6 hours flight
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-6 text-center text-sm text-gray-500">
-                Animation represents the journey of Palestinian students to Durham University
               </div>
             </Card>
-          </div>
-        </div>
-      </section>
 
-      {/* Journey Milestones */}
-      <section className="py-20 bg-[var(--dpet-beige-light)]">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl mb-4 text-[var(--dpet-black)]">The Path to Excellence</h2>
-              <div className="w-24 h-1 bg-[var(--dpet-red)] mx-auto rounded-full" />
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
               {milestones.map((milestone, index) => (
-                <Card key={index} className="p-6 hover:shadow-lg transition-shadow">
-                  <div className="flex gap-4">
-                    <div
-                      className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center"
-                      style={{ backgroundColor: `${milestone.color}15` }}
-                    >
-                      <milestone.icon className="w-6 h-6" style={{ color: milestone.color }} />
-                    </div>
-                    <div>
-                      <div className="text-sm text-gray-500 mb-1">{milestone.location}</div>
-                      <h3 className="text-xl mb-2 text-[var(--dpet-black)]">{milestone.title}</h3>
-                      <p className="text-gray-600">{milestone.description}</p>
-                    </div>
+                <Card key={index} className="dpet-card group p-6">
+                  <div
+                    className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl text-white shadow-md transition-transform group-hover:scale-110"
+                    style={{ backgroundColor: milestone.color }}
+                  >
+                    <milestone.icon className="h-6 w-6" />
                   </div>
+                  <div
+                    className="mb-1 text-sm font-semibold uppercase tracking-[0.18em]"
+                    style={{ color: milestone.color }}
+                  >
+                    {milestone.location}
+                  </div>
+                  <h3 className="mb-3 text-2xl font-semibold text-dpet-black transition-colors group-hover:text-dpet-red">
+                    {milestone.title}
+                  </h3>
+                  <p className="text-sm leading-relaxed text-dpet-clay">
+                    {milestone.description}
+                  </p>
                 </Card>
               ))}
             </div>
@@ -228,27 +202,46 @@ export function MapPage() {
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-20 bg-white">
+      <section className="py-20">
+        <div className="container mx-auto px-4">
+          <div className="dpet-card mx-auto max-w-4xl p-10 text-center">
+            <Heart className="mx-auto mb-6 h-12 w-12 fill-dpet-red text-dpet-red" />
+            <h2 className="mb-6 text-4xl font-semibold text-dpet-black md:text-5xl">
+              Building a Global Community
+            </h2>
+            <p className="mx-auto max-w-2xl text-xl leading-relaxed text-dpet-clay">
+              Our scholars return to Palestine or join the global diaspora as
+              ambassadors of change, carrying the knowledge and spirit of
+              Durham with them.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <div className="bg-gradient-to-br from-[var(--dpet-olive)] to-[var(--dpet-olive-light)] rounded-lg p-12 text-white text-center">
-              <h2 className="text-4xl mb-8 text-white">A Bridge of Opportunity</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div>
-                  <div className="text-5xl mb-2">50+</div>
-                  <div className="text-lg">Scholars</div>
-                  <div className="text-sm opacity-80">Who made the journey</div>
-                </div>
-                <div>
-                  <div className="text-5xl mb-2">15+</div>
-                  <div className="text-lg">Years</div>
-                  <div className="text-sm opacity-80">Of building bridges</div>
-                </div>
-                <div>
-                  <div className="text-5xl mb-2">∞</div>
-                  <div className="text-lg">Impact</div>
-                  <div className="text-sm opacity-80">Lives transformed</div>
+            <div className="dpet-dark-section rounded-[2rem] p-12 text-center text-white">
+              <div className="relative z-10">
+                <h2 className="mb-8 text-4xl font-semibold text-white md:text-5xl">
+                  A Bridge of Opportunity
+                </h2>
+                <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+                  <div>
+                    <div className="mb-2 text-5xl font-bold">50+</div>
+                    <div className="text-lg">Scholars</div>
+                    <div className="text-sm opacity-80">Who made the journey</div>
+                  </div>
+                  <div>
+                    <div className="mb-2 text-5xl font-bold">15+</div>
+                    <div className="text-lg">Years</div>
+                    <div className="text-sm opacity-80">Of building bridges</div>
+                  </div>
+                  <div>
+                    <div className="mb-2 text-5xl font-bold">∞</div>
+                    <div className="text-lg">Impact</div>
+                    <div className="text-sm opacity-80">Lives transformed</div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -256,42 +249,50 @@ export function MapPage() {
         </div>
       </section>
 
-      {/* Cultural Connection */}
-      <section className="py-20 bg-[var(--dpet-beige-light)]">
+      <section className="dpet-soft-section py-20">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
-              <h2 className="text-4xl mb-4 text-[var(--dpet-black)]">More Than Miles</h2>
-              <div className="w-24 h-1 bg-[var(--dpet-olive)] mx-auto rounded-full" />
+              <h2 className="dpet-section-title">More Than Miles</h2>
             </div>
 
-            <Card className="p-8 md:p-12">
-              <p className="text-lg text-gray-700 mb-6 leading-relaxed">
-                The journey from Palestine to Durham represents more than just physical distance. It's a bridge between 
-                two cultures, two communities, and countless opportunities. DPET scholars carry with them the rich 
-                heritage of Palestine—its resilience, creativity, and deep commitment to education.
+            <Card className="dpet-card p-8 md:p-12">
+              <p className="mb-6 text-lg leading-relaxed text-dpet-clay">
+                The journey from Palestine to Durham represents more than just
+                physical distance. It's a bridge between two cultures, two
+                communities, and countless opportunities. DPET scholars carry
+                with them the rich heritage of Palestine—its resilience,
+                creativity, and deep commitment to education.
               </p>
-              <p className="text-lg text-gray-700 leading-relaxed">
-                At Durham, they encounter world-class academics, diverse perspectives, and the historic excellence of 
-                one of Britain's oldest universities. This fusion of Palestinian heritage and British academic tradition 
-                creates something truly special: scholars who are deeply rooted in their culture while equipped to make 
-                a global impact.
+              <p className="text-lg leading-relaxed text-dpet-clay">
+                At Durham, they encounter world-class academics, diverse
+                perspectives, and the historic excellence of one of Britain's
+                oldest universities. This fusion of Palestinian heritage and
+                British academic tradition creates something truly special:
+                scholars who are deeply rooted in their culture while equipped
+                to make a global impact.
               </p>
             </Card>
           </div>
         </div>
       </section>
 
-      {/* Call to Action */}
-      <section className="py-20 bg-[var(--dpet-red)] text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl mb-6 text-white">Begin Your Journey</h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto">
-            The path from Palestine to Durham is waiting for talented students like you
+      <section className="dpet-dark-section py-20">
+        <div className="container relative z-10 mx-auto px-4 text-center">
+          <div className="dpet-kicker mb-6">Take the First Step</div>
+          <h2 className="mb-6 text-4xl font-semibold text-white md:text-5xl">Begin Your Journey</h2>
+          <p className="mx-auto mb-8 max-w-2xl text-xl text-white/85">
+            The path from Palestine to Durham is waiting for talented students
+            like you
           </p>
           <button
-            onClick={() => window.open('https://durhampalestine.webspace.durham.ac.uk/apply/', '_blank')}
-            className="bg-white text-[var(--dpet-red)] hover:bg-[var(--dpet-beige)] px-8 py-4 rounded-md transition-colors"
+            onClick={() =>
+              window.open(
+                "https://durhampalestine.webspace.durham.ac.uk/apply/",
+                "_blank",
+              )
+            }
+            className="dpet-button-light rounded-full px-8 py-4 font-semibold"
           >
             Apply for Scholarship
           </button>

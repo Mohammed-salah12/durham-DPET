@@ -41,9 +41,9 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="dpet-page-shell min-h-screen flex flex-col">
       <Header currentPage={currentPage} onNavigate={handleNavigate} />
-      <main className="flex-1">
+      <main className="relative z-10 flex-1">
         {renderPage()}
       </main>
       <Footer onNavigate={handleNavigate} />
